@@ -5,9 +5,8 @@
     <title>Persons Page</title>
 </head>
     <body>
-    <span>List of users:</span><br>
         <div th:each="person : ${persons}">
-            <span th:text="${person.firstname}">DummyText</span>
+            <a th:href="@{/persons/{id}(id = ${person.id})}" th:text="|${person.id} ${person.firstname} ${person.lastname}|">DummyPerson!</a>
         </div>
     </body>
 </html>

@@ -44,8 +44,9 @@ public class Person {
     private Role role;
 
     @Column(name = "birth_date")
-    @NotBlank
     private LocalDate birthDate;
+
+    private String password;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Book> books;

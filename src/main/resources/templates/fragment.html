@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragment Page</title>
+</head>
+    <body>
+        <div th:fragment="header">
+            <form th:action="@{/logout}" method="post">
+                <span th:text="${#authentication.principal.username}">DummyUsername:</span><br>
+                <button type="submit">logout!</button>
+            </form>
+        </div>
+    </body>
+</html>

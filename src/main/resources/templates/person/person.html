@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Persons Page</title>
+</head>
+    <body>
+    <div th:insert="~{fragment::header}"></div>
+
+        <form th:action="@{/persons/{id}/update(id = ${person.id})}" method="post">
+            <label for="firstname">FirstName: </label>
+            <input type="text" id="firstname" name="firstname" th:value="${person.firstname}"><br>
+
+            <label for="lastname">LastName: </label>
+            <input type="text" id="lastname" name="lastname" th:value="${person.lastname}"><br>
+
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" th:value="${person.email}"><br>
+
+            <label for="phoneNumber">Phone: </label>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${person.phoneNumber}"><br>
+
+            <label for="birthDate">BirthDate: </label>
+            <input type="date" id="birthDate" name="birthDate" th:value="${person.birthDate}"><br>
+
+            <div th:each="role : ${roles}">
+                <label for="role" th:text="${role.name()}">DummyRole</label>
+                <input type="radio" name="role" id="role" th:value="${role.name()}" th:checked="${role.name() == person.role.name()}">
+            </div><br/>
+
+            <span th:if="${!#lists.isEmpty(person.books)}">List of all books:</span>
+            <ul th:if="${!#lists.isEmpty(person.books)}">
+                <li th:each="book : ${person.books}" th:text="|${book.getTitle()} ${book.getYear()}|"></li>
+            </ul>
+            <button type="submit">Update</button>
+        </form><br>
+        <form th:if="${#authentication.principal.username == 'sveta@gmail.com'}" th:action="@{/persons/{id}/delete(id = ${person.id})}" method="post">
+            <button type="submit">Delete!</button>
+        </form>
+    </body>
+</html>
