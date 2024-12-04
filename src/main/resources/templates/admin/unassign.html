@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unassign page</title>
+</head>
+<body>
+    <form action="@{/unassign}" method="post" th:if="${!books.isEmpty()}">
+
+        <label for="books">Assigned books:</label>
+        <select name="bookId" id="books">
+            <option th:each="book : ${books}"
+                    th:text="|${book.title} ${book.year} - ${book.person.firstname} ${book.person.lastname}| "
+                    th:value="${book.id}">
+
+            </option>
+        </select>
+
+        <button type="submit">Update</button>
+    </form>
+        <span th:if="${books.isEmpty()}">There are no books available</span>
+</body>
+</html>

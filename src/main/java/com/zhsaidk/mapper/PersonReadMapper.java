@@ -24,12 +24,14 @@ public class PersonReadMapper implements Mapper<Person, PersonReadDto> {
                 .toList();
 
 
+
         return new PersonReadDto(
                 person.getId(),
                 person.getFirstname(),
                 person.getLastname(),
                 person.getEmail(),
                 person.getPhoneNumber(),
+                null,
                 person.getRole(),
                 person.getBirthDate(),
                 books

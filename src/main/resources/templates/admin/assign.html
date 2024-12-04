@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Persons Page</title>
+</head>
+    <body>
+
+        <form action="@{/assign}" method="post" th:if="${!books.isEmpty()}">
+            <label for="persons">Persons:</label>
+            <select name="personId" id="persons">
+                <option th:each="person : ${persons}" th:text="|${person.firstname} ${person.lastname}|" th:value="${person.id}"></option>
+            </select>
+
+            <label for="books">Books:</label>
+            <select name="bookId" id="books">
+                <option th:each="book : ${books}" th:text="|${book.title} ${book.year}|" th:value="${book.id}"></option>
+            </select>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <span th:if="${books.isEmpty()}">There are no books available</span>
+    </body>
+</html>

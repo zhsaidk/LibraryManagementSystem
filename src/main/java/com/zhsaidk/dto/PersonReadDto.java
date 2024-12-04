@@ -15,6 +15,7 @@ public class PersonReadDto {
     String lastname;
     String email;
     String phoneNumber;
+    String password;
     Role role;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate birthDate;

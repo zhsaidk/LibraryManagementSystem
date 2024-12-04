@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class PersonController {
     private final PersonService personService;
-    private final PersonRepository personRepository;
 
     @GetMapping
     public String getAll(Model model) {
@@ -32,20 +31,6 @@ public class PersonController {
         return "person/person";
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("roles", Role.values());
-
-        return "account/registration";
-    }
-
-
-    @PostMapping("/registration")
-    public String create(PersonReadDto personReadDto,
-                         Model model) {
-        PersonReadDto readDto = personService.create(personReadDto);
-        return "redirect:/persons/" + readDto.getId();
-    }
 
 
     @PostMapping("/{id}/update")

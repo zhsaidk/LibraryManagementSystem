@@ -15,10 +15,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(config -> config
-                        .requestMatchers("/admin/**", "/persons/registration", "/login").permitAll()
-                        .requestMatchers("/persons", "/persons/{id}", "/persons/{id}/delete").hasAuthority(Role.ADMIN.getAuthority())
+                        .requestMatchers("/registration", "/login", "/swagger-ui/**", "/v3/api-docs").permitAll()
+                        .requestMatchers("/persons", "/persons/{id}", "/persons/{id}/delete", "/admin/**").hasAuthority(Role.ADMIN.getAuthority())
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
