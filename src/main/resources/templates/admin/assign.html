@@ -6,7 +6,7 @@
 </head>
     <body>
 
-        <form action="@{/assign}" method="post" th:if="${!books.isEmpty()}">
+        <form th:action="@{/assign}" method="post" th:if="${!books.isEmpty()}">
             <label for="persons">Persons:</label>
             <select name="personId" id="persons">
                 <option th:each="person : ${persons}" th:text="|${person.firstname} ${person.lastname}|" th:value="${person.id}"></option>

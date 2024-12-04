@@ -5,7 +5,7 @@
     <title>Unassign page</title>
 </head>
 <body>
-    <form action="@{/unassign}" method="post" th:if="${!books.isEmpty()}">
+    <form th:action="@{/unassign}" method="post" th:if="${!books.isEmpty()}">
 
         <label for="books">Assigned books:</label>
         <select name="bookId" id="books">
