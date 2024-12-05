@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Persons Page</title>
+</head>
+    <body>
+        <form th:action="@{/books/{id}/assign(id = ${book.id})}" method="post">
+            <p>Id: <span th:text="${book.id}"></span></p>
+
+            <p>Title: <span th:text="${book.title}"></span></p>
+
+            <p>Year: <span th:text="${book.year}"></span></p>
+
+            <p>Author: <span th:text="${book.author.name}"></span></p>
+
+            <div th:if="${book.person == null}">
+                <label for="personId">Persons:</label>
+                <select name="personId" id="personId">
+                    <option th:each="person: ${persons}" th:text="|${person.firstname} ${person.lastname}|" th:value="${person.id}"></option>
+                </select>
+                <button type="submit">Assign!</button>
+            </div>
+
+            <div th:if="${book.person}">
+                <p>Currently assigned to: <span th:text="|${book.person.firstname} ${book.person.lastname}|"></span></p>
+                <button type="submit">Release!</button>
+            </div>
+
+        </form>
+    </body>
+</html>

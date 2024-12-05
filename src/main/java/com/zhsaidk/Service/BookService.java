@@ -7,9 +7,13 @@ import com.zhsaidk.database.repository.PersonRepository;
 import com.zhsaidk.dto.BookReadDto;
 import com.zhsaidk.mapper.BookReadMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +56,15 @@ public class BookService {
 
     }
 
+
+    public List<Book> findAllBooks(){
+        return bookRepository.findAll();
+    }
+
+    public Book findBookById(Long id){
+        return Optional.of(bookRepository.findById(id))
+                .get()
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
 }

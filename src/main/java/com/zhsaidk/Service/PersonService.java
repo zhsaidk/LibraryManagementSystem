@@ -75,4 +75,8 @@ public class PersonService implements UserDetailsService {
                 ))
                 .orElseThrow(()->new UsernameNotFoundException("UserNotFound!"));
     }
+
+    public void save(Person person){
+        personRepository.saveAndFlush(person);
+    }
 }

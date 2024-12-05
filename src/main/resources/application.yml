@@ -12,3 +12,16 @@ spring:
       hibernate:
         format_sql: true
     open-in-view: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1056218577252-9i6pkrl07abb38b3e9ktidlp2ciu42ae.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            scope: openid,email,profile
+
+
+
