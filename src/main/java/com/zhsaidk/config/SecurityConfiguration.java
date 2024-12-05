@@ -54,7 +54,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService(WebSocketServletAutoConfiguration.TomcatWebSocketConfiguration tomcatWebSocketConfiguration){
+    public OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService(){
         return userRequest -> {
             String email = userRequest.getIdToken().getClaim("email");
             UserDetails userDetails = personService.loadUserByUsername(email);
