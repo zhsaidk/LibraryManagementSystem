@@ -2,11 +2,13 @@ package com.zhsaidk.Service;
 
 import com.zhsaidk.database.Entity.Person;
 import com.zhsaidk.database.repository.PersonRepository;
+import com.zhsaidk.dto.PersonCreateEditDto;
 import com.zhsaidk.dto.PersonReadDto;
 import com.zhsaidk.mapper.PersonCreateEditMapper;
 import com.zhsaidk.mapper.PersonReadMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,8 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +27,12 @@ public class PersonService implements UserDetailsService {
     private final PersonReadMapper personReadMapper;
     private final PersonCreateEditMapper personCreateEditMapper;
 
-    public List<Person> findAllPersons() {
-        return personRepository.findAll();
+    public List<PersonReadDto> findAllPersons() {
+        return personRepository.findAll()
+                .stream()
+                .map(personReadMapper::map)
+                .toList();
+
     }
 
     public PersonReadDto findById(Long id) {
@@ -37,19 +41,20 @@ public class PersonService implements UserDetailsService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public PersonReadDto create(PersonReadDto personReadDto) {
-        return Optional.ofNullable(personReadDto)
+    public PersonReadDto create(PersonCreateEditDto personCreateEditDto) {
+        return Optional.ofNullable(personCreateEditDto)
                 .map(personCreateEditMapper::map)
                 .map(personRepository::saveAndFlush)
                 .map(personReadMapper::map)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public PersonReadDto update(Long id,
-                                PersonReadDto personReadDto) {
+                                PersonCreateEditDto personCreateEditDto) {
         return personRepository.findById(id)
                 .map(person -> {
-                    personCreateEditMapper.map(personReadDto, person);
+                    personCreateEditMapper.map(personCreateEditDto, person);
                     personRepository.saveAndFlush(person);
                     return personReadMapper.map(person);
                 })

@@ -1,17 +1,18 @@
 package com.zhsaidk.mapper;
 
 import com.zhsaidk.database.Entity.Book;
-import com.zhsaidk.dto.BookReadDto;
+import com.zhsaidk.dto.BookDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookReadMapper implements Mapper<Book, BookReadDto>{
+public class BookReadMapper implements Mapper<Book, BookDto>{
     @Override
-    public BookReadDto map(Book book) {
-        return new BookReadDto(
+    public BookDto map(Book book) {
+        return new BookDto(
                 book.getId(),
                 book.getTitle(),
-                book.getYear()
+                book.getYear(),
+                book.getAuthor()
         );
     }
 }

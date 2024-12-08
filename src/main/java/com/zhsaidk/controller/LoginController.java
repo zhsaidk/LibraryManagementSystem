@@ -2,7 +2,7 @@ package com.zhsaidk.controller;
 
 import com.zhsaidk.Service.PersonService;
 import com.zhsaidk.database.Entity.Role;
-import com.zhsaidk.dto.PersonReadDto;
+import com.zhsaidk.dto.PersonCreateEditDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +27,7 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public String create(PersonReadDto personReadDto,
-                         Model model) {
-        return "redirect:/persons/" + personService.create(personReadDto).getId();
+    public String create(PersonCreateEditDto personCreateEditDto) {
+        return "redirect:/persons/" + personService.create(personCreateEditDto).getId();
     }
 }

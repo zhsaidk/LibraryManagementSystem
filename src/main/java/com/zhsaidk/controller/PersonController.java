@@ -2,7 +2,7 @@ package com.zhsaidk.controller;
 
 import com.zhsaidk.Service.PersonService;
 import com.zhsaidk.database.Entity.Role;
-import com.zhsaidk.database.repository.PersonRepository;
+import com.zhsaidk.dto.PersonCreateEditDto;
 import com.zhsaidk.dto.PersonReadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,10 +34,10 @@ public class PersonController {
 
 
     @PostMapping("/{id}/update")
-    public String update(PersonReadDto personReadDto,
+    public String update(PersonCreateEditDto personCreateEditDto,
                          @PathVariable("id") Long id,
                          Model model) {
-        return "redirect:/persons/" + personService.update(id, personReadDto).getId();
+        return "redirect:/persons/" + personService.update(id, personCreateEditDto).getId();
     }
 
     @PostMapping("/{id}/delete")

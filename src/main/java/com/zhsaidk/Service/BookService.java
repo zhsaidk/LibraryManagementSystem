@@ -4,10 +4,9 @@ import com.zhsaidk.database.Entity.Book;
 import com.zhsaidk.database.Entity.Person;
 import com.zhsaidk.database.repository.BookRepository;
 import com.zhsaidk.database.repository.PersonRepository;
-import com.zhsaidk.dto.BookReadDto;
+import com.zhsaidk.dto.BookDto;
 import com.zhsaidk.mapper.BookReadMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,7 +22,7 @@ public class BookService {
     private final PersonService personService;
     private final PersonRepository personRepository;
 
-    public List<BookReadDto> findFreeBooks(){
+    public List<BookDto> findFreeBooks(){
         return bookRepository.findFreeBooks()
                 .stream()
                 .map(bookReadMapper::map)
@@ -57,13 +56,14 @@ public class BookService {
     }
 
 
-    public List<Book> findAllBooks(){
-        return bookRepository.findAll();
+    public List<BookDto> findAllBooks(){
+        return bookRepository.findAll().stream()
+                .map(bookReadMapper::map)
+                .toList();
     }
 
     public Book findBookById(Long id){
-        return Optional.of(bookRepository.findById(id))
-                .get()
+        return bookRepository.findById(id)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 

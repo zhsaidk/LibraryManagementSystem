@@ -9,6 +9,7 @@
 
     public interface PersonRepository extends JpaRepository<Person, Long> {
 
+        @EntityGraph(attributePaths = {"books", "books.author"})
         List<Person> findAll();
 
         @EntityGraph(attributePaths = {"books"})
