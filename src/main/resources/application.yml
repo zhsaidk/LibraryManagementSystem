@@ -23,5 +23,10 @@ spring:
             redirect-uri: http://localhost:8080/login/oauth2/code/google
             scope: openid,email,profile
 
-
-
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: 1056218577252-9i6pkrl07abb38b3e9ktidlp2ciu42ae.apps.googleusercontent.com
+      client-secret: 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
+      scopes: openid,email,profile
+    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html

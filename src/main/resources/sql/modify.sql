@@ -7,3 +7,6 @@ alter table person
 add column password varchar(256) default '{noop}123';
 
 select *from person;
+
+delete from person
+where id > 6;

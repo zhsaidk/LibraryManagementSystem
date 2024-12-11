@@ -49,7 +49,6 @@ public class PersonService implements UserDetailsService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     public PersonReadDto update(Long id,
                                 PersonCreateEditDto personCreateEditDto) {
         return personRepository.findById(id)

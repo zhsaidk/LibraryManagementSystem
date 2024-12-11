@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("/rest/persons")
+@RestController
+@RequestMapping("/rest/persons")
 @RequiredArgsConstructor
 public class PersonRestController {
     private final PersonService personService;
@@ -26,24 +28,31 @@ public class PersonRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonReadDto> findById(@PathVariable Long id) {
-        return Optional.ofNullable(personService.findById(id))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(personService.findById(id));
     }
 
     @PutMapping("/{id}/update")
     public ResponseEntity<PersonReadDto> update(@RequestBody PersonCreateEditDto personCreateEditDto,
                          @PathVariable("id") Long id) {
 
-        return Optional.ofNullable(personService.update(id, personCreateEditDto))
-                .map(ResponseEntity::ok)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "PersonNotFound"));
+        return ResponseEntity.ok(personService.update(id, personCreateEditDto));
     }
 
+    @PostMapping("/create")
     public ResponseEntity<PersonReadDto> create(@RequestBody PersonCreateEditDto personCreateEditDto){
-        personService.create(personCreateEditDto);
-        return null;
+        PersonReadDto createdUser = personService.create(personCreateEditDto);
+        URI location = URI.create("/rest/persons/" + createdUser.getId());
+
+        return ResponseEntity.created(location).body(createdUser);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+        return personService.deleteById(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
+
 
 }
 

@@ -4,7 +4,9 @@ import com.zhsaidk.database.Entity.Book;
 import com.zhsaidk.database.Entity.Person;
 import com.zhsaidk.database.repository.BookRepository;
 import com.zhsaidk.database.repository.PersonRepository;
+import com.zhsaidk.dto.BookCreateEditDto;
 import com.zhsaidk.dto.BookDto;
+import com.zhsaidk.mapper.BookCreateEditMapper;
 import com.zhsaidk.mapper.BookReadMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ public class BookService {
     private final BookReadMapper bookReadMapper;
     private final PersonService personService;
     private final PersonRepository personRepository;
+    private final BookCreateEditMapper bookCreateEditMapper;
 
     public List<BookDto> findFreeBooks(){
         return bookRepository.findFreeBooks()
@@ -62,9 +65,36 @@ public class BookService {
                 .toList();
     }
 
-    public Book findBookById(Long id){
+    public BookDto findBookById(Long id){
         return bookRepository.findById(id)
+                .map(bookReadMapper::map)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    public BookDto create(BookCreateEditDto bookCreateEditDto){
+        return Optional.of(bookCreateEditDto)
+                .map(bookCreateEditMapper::map)
+                .map(bookRepository::saveAndFlush)
+                .map(bookReadMapper::map)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST));
+    }
+
+    public BookDto update(Long id, BookCreateEditDto bookCreateEditDto){
+        return bookRepository.findById(id)
+                .map(book -> {
+                    bookCreateEditMapper.map(bookCreateEditDto, book);
+                    bookRepository.saveAndFlush(book);
+                    return bookReadMapper.map(book);
+                })
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    public boolean deleteById(Long id){
+        return bookRepository.findById(id)
+                .map(book->{
+                    bookRepository.deleteById(id);
+                    return true;
+                })
+                .orElse(false);
+    }
 }

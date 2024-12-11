@@ -35,6 +35,7 @@ values ('Ivan', 'Ivanov', 'ivan@gmail.com', '+77787077777', '2005-10-10'),
        ('Oleg', 'Olegovich', 'oleg@gmail.com', '+77787070909', '2002-10-10'),
        ('Sveta', 'Svetnikova', 'sveta@gmail.com', '+77763459292', '1999-10-10'),
        ('Dmitriy', 'Falkovskiy', 'dmitriy2@gmail.com', '+77782346576', '1998-10-10');
+       ('Dmitriy', 'Falkovskiy', 'dmitriy2@gmail.com', '+77782346576', '1998-10-10');
 
 
 insert into author(name)

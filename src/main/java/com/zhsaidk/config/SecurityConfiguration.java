@@ -36,9 +36,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(config -> config
-                        .requestMatchers("/registration", "/login", "/swagger-ui/**", "/v3/api-docs").permitAll()
+                        .requestMatchers("/registration", "/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/persons", "/persons/{id}", "/persons/{id}/delete", "/admin/**", "/assign", "/unassign").hasAuthority(Role.ADMIN.getAuthority())
                         .anyRequest().authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+//                .httpBasic(Customizer.withDefaults())
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/persons"))
