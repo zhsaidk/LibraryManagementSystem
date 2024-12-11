@@ -25,14 +25,16 @@ public class BookService {
     private final PersonRepository personRepository;
     private final BookCreateEditMapper bookCreateEditMapper;
 
-    public List<BookDto> findFreeBooks(){
+    public List<BookDto> findFreeBooks() {
         return bookRepository.findFreeBooks()
                 .stream()
                 .map(bookReadMapper::map)
                 .toList();
-    };
+    }
 
-    public void assignBook(Long bookId, Long personId){
+    ;
+
+    public void assignBook(Long bookId, Long personId) {
         Person person = personRepository.findById(personId)
                 .orElseThrow(() -> new IllegalArgumentException("UserNotFound!"));
 
@@ -45,53 +47,59 @@ public class BookService {
     }
 
 
-    public List<Book> findNotFreeBooks(){
+    public List<Book> findNotFreeBooks() {
         return bookRepository.findNotFreeBooks();
     }
 
-    public void unassignBook(Long bookId){
+    public void unassignBook(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found!"));
 
         book.setPerson(null);
         bookRepository.saveAndFlush(book);
-
     }
 
 
-    public List<BookDto> findAllBooks(){
+    public List<BookDto> findAllBooks() {
         return bookRepository.findAll().stream()
                 .map(bookReadMapper::map)
                 .toList();
     }
 
-    public BookDto findBookById(Long id){
+    public BookDto findBookById(Long id) {
         return bookRepository.findById(id)
                 .map(bookReadMapper::map)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }// Для того что бы избежать циклической зависимости вернул BookDto
 
-    public BookDto create(BookCreateEditDto bookCreateEditDto){
+
+    public Book findBookByIdForWeb(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }// Для чтого чтобы из Thymeleaf достучится до person
+
+
+    public BookDto create(BookCreateEditDto bookCreateEditDto) {
         return Optional.of(bookCreateEditDto)
                 .map(bookCreateEditMapper::map)
                 .map(bookRepository::saveAndFlush)
                 .map(bookReadMapper::map)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
     }
 
-    public BookDto update(Long id, BookCreateEditDto bookCreateEditDto){
+    public BookDto update(Long id, BookCreateEditDto bookCreateEditDto) {
         return bookRepository.findById(id)
                 .map(book -> {
                     bookCreateEditMapper.map(bookCreateEditDto, book);
                     bookRepository.saveAndFlush(book);
                     return bookReadMapper.map(book);
                 })
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public boolean deleteById(Long id){
+    public boolean deleteById(Long id) {
         return bookRepository.findById(id)
-                .map(book->{
+                .map(book -> {
                     bookRepository.deleteById(id);
                     return true;
                 })

@@ -1,4 +1,4 @@
-package com.zhsaidk.controller.rest;
+package com.zhsaidk.http.rest;
 
 import com.zhsaidk.Service.BookService;
 import com.zhsaidk.Service.PersonService;

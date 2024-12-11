@@ -1,4 +1,4 @@
-package com.zhsaidk.controller;
+package com.zhsaidk.http.controller;
 
 import com.zhsaidk.Service.BookService;
 import com.zhsaidk.Service.PersonService;
@@ -31,7 +31,7 @@ public class BookController {
     @GetMapping("/{id}")
     public String getBook(@PathVariable("id") Long id,
                           Model model){
-        model.addAttribute("book", bookService.findBookById(id));
+        model.addAttribute("book", bookService.findBookByIdForWeb(id));
         model.addAttribute("persons", personService.findAllPersons());
         return "book/book";
     }
