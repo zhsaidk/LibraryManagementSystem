@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
@@ -26,6 +27,7 @@ public class PersonService implements UserDetailsService {
     private final PersonRepository personRepository;
     private final PersonReadMapper personReadMapper;
     private final PersonCreateEditMapper personCreateEditMapper;
+    private final ImageService imageService;
 
     public List<PersonReadDto> findAllPersons() {
         return personRepository.findAll()
@@ -78,6 +80,13 @@ public class PersonService implements UserDetailsService {
                         Collections.singleton(person.getRole())
                 ))
                 .orElseThrow(()->new UsernameNotFoundException("UserNotFound!"));
+    }
+
+    public byte[] getImage(Long id){
+        return personRepository.findById(id)
+                .filter(person -> StringUtils.hasText(person.getImage()))
+                .flatMap(person -> imageService.get(person.getImage()))
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public void save(Person person){

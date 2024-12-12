@@ -10,3 +10,7 @@ select *from person;
 
 delete from person
 where id > 6;
+
+
+alter table person
+add column image VARCHAR(124) default null

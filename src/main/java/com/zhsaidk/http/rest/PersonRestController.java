@@ -1,5 +1,6 @@
 package com.zhsaidk.http.rest;
 
+import com.zhsaidk.Service.ImageService;
 import com.zhsaidk.Service.PersonService;
 import com.zhsaidk.dto.PersonCreateEditDto;
 import com.zhsaidk.dto.PersonReadDto;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PersonRestController {
     private final PersonService personService;
+    private final ImageService imageService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -53,7 +55,10 @@ public class PersonRestController {
                 : ResponseEntity.notFound().build();
     }
 
-
+    @GetMapping("/{id}/avatar")
+    public byte[] getImage(@PathVariable("id") Long id){
+        return personService.getImage(id);
+    }
 }
 
 

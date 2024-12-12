@@ -48,6 +48,8 @@ public class Person {
 
     private String password;
 
+    private String image;
+
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Book> books;
 }

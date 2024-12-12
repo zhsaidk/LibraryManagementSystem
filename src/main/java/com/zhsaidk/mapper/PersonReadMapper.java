@@ -23,6 +23,7 @@ public class PersonReadMapper implements Mapper<Person, PersonReadDto> {
                 from.getPhoneNumber(),
                 from.getRole(),
                 from.getBirthDate(),
+                from.getImage(),
                 Optional.ofNullable(from.getBooks())
                         .orElse(List.of())
                         .stream().map(bookReadMapper::map)

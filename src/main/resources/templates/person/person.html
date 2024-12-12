@@ -5,9 +5,14 @@
     <title>Persons Page</title>
 </head>
     <body>
-    <div th:insert="~{fragment::header}"></div>
+    <div th:insert="~{fragment::header}"></div><br/>
 
-        <form th:action="@{/persons/{id}/update(id = ${person.id})}" method="post">
+        <form th:action="@{/persons/{id}/update(id = ${person.id})}" enctype="multipart/form-data" method="post">
+
+            <div th:if="${person.image}">
+                <img th:src="@{/rest/persons/{id}/avatar(id=${person.id})}" alt="avatar"/>
+            </div><br>
+
             <label for="firstname">FirstName: </label>
             <input type="text" id="firstname" name="firstname" th:value="${person.firstname}"><br>
 
@@ -27,6 +32,9 @@
                 <label for="role" th:text="${role.name()}">DummyRole</label>
                 <input type="radio" name="role" id="role" th:value="${role.name()}" th:checked="${role.name() == person.role.name()}">
             </div><br/>
+
+            <label for="image">Image: </label>
+            <input type="file" id="image" name="image"><br>
 
             <span th:if="${!#lists.isEmpty(person.books)}">List of all books:</span>
             <ul th:if="${!#lists.isEmpty(person.books)}">
