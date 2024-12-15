@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset zhavokhir:1
+--changeset zhavokhir:1.1
 create table if not exists person
 (
     id           BIGSERIAL PRIMARY KEY,
@@ -13,7 +13,7 @@ create table if not exists person
 );
 --rollback DROP table person
 
---changeset zhavokhir:2
+--changeset zhavokhir:1.2
 create table if not exists author
 (
     id   BIGSERIAL PRIMARY KEY,
@@ -21,7 +21,7 @@ create table if not exists author
 );
 --rollback DROP table author
 
---changeset zhavokhir:3
+--changeset zhavokhir:1.3
 create table if not exists book
 (
     id        BIGSERIAL PRIMARY KEY,

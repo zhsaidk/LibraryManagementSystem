@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset zhavokhir:1
+--changeset zhavokhir:2.1
 alter table person
     add column image VARCHAR(124) default null;
 

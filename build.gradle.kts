@@ -29,6 +29,9 @@ dependencies {
 
     implementation("org.springframework.security:spring-security-oauth2-client")
     implementation("org.springframework.security:spring-security-oauth2-jose")
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-envers
+    implementation("org.springframework.data:spring-data-envers")
+
 
     // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
     implementation("org.liquibase:liquibase-core")

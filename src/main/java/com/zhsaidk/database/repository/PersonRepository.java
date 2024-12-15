@@ -3,11 +3,14 @@
     import com.zhsaidk.database.Entity.Person;
     import org.springframework.data.jpa.repository.EntityGraph;
     import org.springframework.data.jpa.repository.JpaRepository;
+    import org.springframework.data.repository.history.RevisionRepository;
 
     import java.util.List;
     import java.util.Optional;
 
-    public interface PersonRepository extends JpaRepository<Person, Long> {
+    public interface PersonRepository extends
+            JpaRepository<Person, Long>,
+            RevisionRepository<Person, Long, Integer> {
 
         @EntityGraph(attributePaths = {"books", "books.author"})
         List<Person> findAll();

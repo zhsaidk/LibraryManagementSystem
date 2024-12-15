@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset zhavokhir:1
+--changeset zhavokhir:3.1
 insert into person(firstname, lastname, email, phone_number, role, birth_date)
 values ('Ivan', 'Ivanov', 'ivan@gmail.com', '+77787077777', 'USER', '2005-10-10'),
        ('Maria', 'Ivanova', 'maria@mail.com', '+77075460909', 'USER', '2001-10-10'),
@@ -10,13 +10,13 @@ values ('Ivan', 'Ivanov', 'ivan@gmail.com', '+77787077777', 'USER', '2005-10-10'
 --rollback delete from person where email in ('ivan@gmail.com', 'maria@mail.com', 'oleg@gmail.com', 'sveta@gmail.com', 'dmitriy2@gmail.com')
 
 
---changeset zhavokhir:2
+--changeset zhavokhir:3.2
 insert into author(name)
 values ('Лев Толстой'),
        ('Стивен Кинг');
 --rollback delete from author where name in ('Лев Толстой','Стивен Кинг')
 
---changeset zhavokhir:3
+--changeset zhavokhir:3.3
 insert into book(title, year, person_id, author_id)
 VALUES ('Война и мир', 1863, null, 1),
        ('Анна Каренина', 1873, null, 1),

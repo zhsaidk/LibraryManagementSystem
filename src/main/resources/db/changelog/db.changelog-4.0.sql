@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset zhavokhir:1
+--changeset zhavokhir:4.1
 alter table person
 add column created_at TIMESTAMP,
 add column modified_at TIMESTAMP,
