@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @Builder
 @Table(name = "person")
-public class Person {
+public class Person extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
