@@ -21,4 +21,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @EntityGraph(attributePaths = {"person", "author"})
     Optional<Book> findById(Long id);
+
+    @Query("select b from Book b where b.title = :title")    // написан для тестирование
+    Optional<Book> findByTitle(String title);
 }

@@ -2,6 +2,7 @@ package com.zhsaidk.http.controller;
 
 import com.zhsaidk.Service.PersonService;
 import com.zhsaidk.database.Entity.Role;
+import com.zhsaidk.database.repository.PersonRepository;
 import com.zhsaidk.dto.PersonCreateEditDto;
 import com.zhsaidk.dto.PersonReadDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class PersonController {
     private final PersonService personService;
+    private final PersonRepository personRepository;
 
     @GetMapping
     public String getAll(Model model) {
@@ -35,15 +37,14 @@ public class PersonController {
 
     @PostMapping("/{id}/update")
     public String update(PersonCreateEditDto personCreateEditDto,
-                         @PathVariable("id") Long id,
-                         Model model) {
+                         @PathVariable("id") Long id) {
         return "redirect:/persons/" + personService.update(id, personCreateEditDto).getId();
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id){
         if(!personService.deleteById(id)){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         return "redirect:/persons";

@@ -11,6 +11,7 @@ import com.zhsaidk.mapper.BookReadMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -32,7 +33,6 @@ public class BookService {
                 .toList();
     }
 
-    ;
 
     public void assignBook(Long bookId, Long personId) {
         Person person = personRepository.findById(personId)
@@ -42,8 +42,10 @@ public class BookService {
                 .orElseThrow(() -> new IllegalArgumentException("BookNotFound!"));
 
         book.setPerson(person);
+        person.getBooks().add(book);
 
         bookRepository.saveAndFlush(book);
+        personRepository.saveAndFlush(person);
     }
 
 
@@ -51,12 +53,13 @@ public class BookService {
         return bookRepository.findNotFreeBooks();
     }
 
+    @Transactional
     public void unassignBook(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found!"));
 
         book.setPerson(null);
-        bookRepository.saveAndFlush(book);
+        bookRepository.save(book);
     }
 
 
@@ -79,6 +82,7 @@ public class BookService {
     }// Для чтого чтобы из Thymeleaf достучится до person
 
 
+    @Transactional
     public BookDto create(BookCreateEditDto bookCreateEditDto) {
         return Optional.of(bookCreateEditDto)
                 .map(bookCreateEditMapper::map)
@@ -87,6 +91,7 @@ public class BookService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
     }
 
+    @Transactional
     public BookDto update(Long id, BookCreateEditDto bookCreateEditDto) {
         return bookRepository.findById(id)
                 .map(book -> {
@@ -97,6 +102,7 @@ public class BookService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @Transactional
     public boolean deleteById(Long id) {
         return bookRepository.findById(id)
                 .map(book -> {

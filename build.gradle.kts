@@ -15,6 +15,10 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+
+
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -31,6 +35,8 @@ dependencies {
     implementation("org.springframework.security:spring-security-oauth2-jose")
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-envers
     implementation("org.springframework.data:spring-data-envers")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
 
 
     // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
