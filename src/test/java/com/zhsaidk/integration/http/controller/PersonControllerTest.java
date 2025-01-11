@@ -34,14 +34,14 @@ class PersonControllerTest {
     private final PersonRepository personRepository;
 
     @Test
-    @WithMockUser(username = "zhavokhir@gmail.com", roles = {"ADMIN"})
+    @WithMockUser(username = "zhavokhir@gmail.com", authorities = {"ADMIN"})
     void getAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/persons"))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 
     @Test
-    @WithMockUser(username = "zhavokhir@gmail.com", roles = {"ADMIN"})
+    @WithMockUser(username = "zhavokhir@gmail.com", authorities = {"ADMIN"})
     void findPersonByID() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/persons/{id}", 1))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
@@ -82,7 +82,7 @@ class PersonControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "zhavokhir@gmail.com", roles = {"ADMIN"})
+    @WithMockUser(username = "zhavokhir@gmail.com", authorities = {"ADMIN"})
     void delete() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/persons/{id}/delete", 1))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
