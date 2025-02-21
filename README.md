@@ -12,17 +12,17 @@
 Язык программирования: Java 19
 Фреймворк: Spring (Core, Boot, MVC, Security, Data)
 База данных: PostgreSQL
-Инструменты: Git, IntelliJ IDEA, JUnit
+Инструменты: Git, IntelliJ IDEA, Swagger, Lombok, JUnit
 Управление зависимостями: Gradle
 Принципы: SOLID, MVC, REST
 
-Требования
-  Для запуска проекта вам понадобится:
+  Требования
+Для запуска проекта вам понадобится:
 
-Java 17+
-PostgreSQL 17.2 (или совместимая версия)
+Java 19
+PostgreSQL 17.2 можно любая версия, (главное, чтобы была создана база данных `library`)
 Gradle
-IntelliJ IDEA (рекомендуется)
+IntelliJ IDEA
 Git
 
   Установка и запуск
